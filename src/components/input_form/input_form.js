@@ -1,19 +1,17 @@
-// src/components/InputForm.js
+// src/components/input_form/input_form.js
 import React, { useState } from 'react';
 
 const InputForm = ({ onInputChange, onSubmit }) => {
     const [inputValue, setInputValue] = useState('');
 
-    const handleChange = (event) => {
-        const newValue = event.target.value;
-        setInputValue(newValue);
-        onInputChange(newValue); // Notify parent of the new input value
+    const handleChange = (e) => {
+        setInputValue(e.target.value);
+        onInputChange && onInputChange(e.target.value);  // Call onInputChange if provided
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault(); // Prevent default form submission behavior
-        onSubmit(inputValue); // Pass the input value to the parent on submit
-        setInputValue(''); // Optionally clear the input field after submission
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onSubmit && onSubmit(inputValue);  // Call onSubmit if provided
     };
 
     return (
@@ -22,9 +20,9 @@ const InputForm = ({ onInputChange, onSubmit }) => {
                 type="text"
                 value={inputValue}
                 onChange={handleChange}
-                placeholder="Type something..."
+                placeholder="Enter a cocktail name"
             />
-            <button type="submit">Submit</button>
+            <button type="submit">Search</button>
         </form>
     );
 };

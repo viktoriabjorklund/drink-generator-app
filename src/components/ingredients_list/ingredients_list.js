@@ -1,7 +1,17 @@
-import InputForm from "../input_form/input_form";
-const IngredientsList = ({ inputValue }) => {
+import React from 'react';
+
+const IngredientsList = ({ results }) => {
     return (
-        <h1>{inputValue}</h1>
+        <div>
+            <h2>Results:</h2>
+            {results.length > 0 ? (
+                results.map((result, index) => (
+                    <p key={index}>{result.strDrink}</p>  // Display cocktail name
+                ))
+            ) : (
+                <p>No results found</p>
+            )}
+        </div>
     );
 };
 
