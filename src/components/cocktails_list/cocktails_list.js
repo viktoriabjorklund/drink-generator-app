@@ -1,10 +1,13 @@
 import React from 'react';
 
-const IngredientsList = ({ results }) => {
+const CocktailsList = ({ results }) => {
+    console.log("renderings resultat", results);
+
+
     return (
         <div>
             <h2>Results:</h2>
-            {results.length > 0 ? (
+            {typeof results === 'object' ? (
                 results.map((result, index) => (
                     <p key={index}>{result.strDrink}</p>  // Display cocktail name
                 ))
@@ -15,4 +18,4 @@ const IngredientsList = ({ results }) => {
     );
 };
 
-export default IngredientsList;
+export default CocktailsList;
