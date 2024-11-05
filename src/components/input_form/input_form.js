@@ -1,5 +1,5 @@
 // src/components/input_form/input_form.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 const API_KEY = process.env.REACT_APP_DRINK_GENERATOR_API_KEY;
 const options = {
     method: 'GET',
@@ -9,24 +9,30 @@ const options = {
     }
 };
 const InputForm = ({onSubmitIngredients}) => {
-    const [inputValue, setInputValue] = useState(""); // Stores the current input value
-    const [ingredientsArray, setIngredientsArray] = useState([]); // Starts with an empty array
+    const [inputValue, setInputValue] = useState("");
+    const [ingredientsArray, setIngredientsArray] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (e) => {
-        setInputValue(e.target.value); // Update inputValue with each keystroke
+        setInputValue(e.target.value);
 
     };
 
+    const checkDuplicates = (ingredient) => {
+        return ingredientsArray.includes(ingredient);
+    };
+
     const addIngredient = async (e) => {
-        //console.log("input ingredient inputValue", inputValue); 
         e.preventDefault();
         setErrorMessage("");
         const ingredient_data = await fetch_ingredient(inputValue);
 
-        if (ingredient_data) {  // Ingredient exists
+        if (ingredient_data && !checkDuplicates(ingredient_data)) { 
             setIngredientsArray((prevArray) => [...prevArray, ingredient_data]);
-            setInputValue("");  // Clear the input
+            setInputValue("");
+        }
+        else if (checkDuplicates(ingredient_data)) {
+            setErrorMessage("This ingredient already exists in the list.");
         }
 
         else {
@@ -34,9 +40,14 @@ const InputForm = ({onSubmitIngredients}) => {
         }
     };
 
+    const removeIngredient = (ingredientToRemove) => {
+        setIngredientsArray((prevArray) =>
+            prevArray.filter(ingredient => ingredient !== ingredientToRemove)
+        );
+    };
+
     const submitIngredients = () => {
         
-        // Call the onSubmitIngredients prop with the ingredientsArray
         if (onSubmitIngredients) {
             onSubmitIngredients(ingredientsArray);
         }
@@ -44,8 +55,6 @@ const InputForm = ({onSubmitIngredients}) => {
 
     const fetch_ingredient  = async (ingredient) => {
         const url = `https://the-cocktail-db.p.rapidapi.com/search.php?i=${ingredient}`;
-        //const url = `https://the-cocktail-db.p.rapidapi.com/filter.php?i=${ingredient}`;
-
         
         try {
             const response = await fetch(url, options);
@@ -64,11 +73,20 @@ const InputForm = ({onSubmitIngredients}) => {
         <form onSubmit={addIngredient}>
             <input type="text" value={inputValue} onChange={handleChange}/>
             <button type="submit">Add Ingredient</button>
+            
+            </form>
             <div>
                 <h3>Ingredients List:</h3>
                 <ul>
                     {ingredientsArray.map((ingredient, index) => (
-                        <li key={index}>{ingredient}</li>
+                        <li key={index}>{ingredient}
+                        
+                        <button
+                            style={{ marginLeft: '10px' }}
+                            onClick={() => removeIngredient(ingredient)}>
+                            Delete
+                        </button>
+                        </li>
                     ))}
                 </ul>
 
@@ -76,7 +94,6 @@ const InputForm = ({onSubmitIngredients}) => {
                     Submit Ingredients
                 </button>             
             </div>
-        </form>
         </div>
     );
 };

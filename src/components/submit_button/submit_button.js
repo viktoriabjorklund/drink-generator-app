@@ -21,8 +21,7 @@ const SubmitButton = () => {
         try {
             const response = await fetch(url, options);
             const data = await response.json();
-            console.log("hej:)", typeof(data.drinks));
-            setResults(data.drinks);  // Extract drinks array or set empty array if null
+            setResults(data.drinks);
         } catch (error) {
             console.error("Error fetching data:", error);
             console.log("results", setResults);
@@ -32,7 +31,7 @@ const SubmitButton = () => {
     return (
         <div>
             <InputForm onSubmitIngredients={handleSubmit}/>
-            <CocktailsList results={results} />  {/* Pass API results as prop */}
+            <CocktailsList results={results} />
     
         </div>
     );
