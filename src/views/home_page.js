@@ -7,10 +7,12 @@ const HomePage = () => {
 
 
     return (
-        <div>
-            <h1>Input Form</h1>
+        <div class="italiana-regular">
+            <div class='text-7xl text-center'>
+            <h1>Cocktail Generator</h1>
+            </div>
             <SubmitButton/>
-    
+            
         </div>
     );
 };

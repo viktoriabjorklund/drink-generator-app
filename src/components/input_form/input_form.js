@@ -68,18 +68,31 @@ const InputForm = ({onSubmitIngredients}) => {
     };
 
     return (
-        <div>
+        <div className='w-1/2 mx-auto'>
         {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         <form onSubmit={addIngredient}>
-            <input type="text" value={inputValue} onChange={handleChange}/>
-            <button type="submit">Add Ingredient</button>
+        <div className="flex flex-col items-center text-center">
             
+            <input 
+                type="text" 
+                value={inputValue} 
+                onChange={handleChange}
+                className="border-b border-gray-300 text-2xl text-center bg-transparent focus:outline-none focus:border-gray-500 mb-2" // Add margin-bottom for spacing
+                placeholder="Enter ingredient"
+            />
+            
+            <button 
+                type="submit" 
+                className="mt-4 bg-[#BB3F3F] hover:bg-[#931F1F] text-white font-bold py-2 px-4 rounded"
+            >
+                Add Ingredient
+            </button>
+            </div>
             </form>
-            <div>
-                <h3>Ingredients List:</h3>
+            <div className='text-2xl'>
                 <ul>
                     {ingredientsArray.map((ingredient, index) => (
-                        <li key={index}>{ingredient}
+                        <li key={index} className='text-gray-700'>{ingredient}
                         
                         <button
                             style={{ marginLeft: '10px' }}
@@ -89,12 +102,16 @@ const InputForm = ({onSubmitIngredients}) => {
                         </li>
                     ))}
                 </ul>
-
-                <button type="button" onClick={submitIngredients}>
+                </div>
+                <button type="button" 
+                onClick={submitIngredients}
+                className="mt-4 bg-[#BB3F3F] hover:bg-[#931F1F] text-white font-bold py-2 px-4 rounded">
                     Submit Ingredients
                 </button>             
-            </div>
+            
         </div>
+            
+
     );
 };
 
