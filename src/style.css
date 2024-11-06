@@ -4,7 +4,16 @@
 
 .italiana-regular {
     font-family: "Italiana", serif;
-    font-weight: 400;
     font-style: normal;
+  }
+
+  .italiana-regular_h {
+    font-size: 4rem;  /* This will be equivalent to text-5xl */
+  }
+
+  body {
+    margin: 0;
+    background:#FDF7E1; 
+    
   }
   
