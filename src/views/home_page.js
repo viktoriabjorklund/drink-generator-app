@@ -6,7 +6,6 @@ import '../style.css';
 
 const HomePage = () => {
 
-
     return (
         <div class="italiana-regular">
             <div class='italiana-regular_h text-center mt-16 text-[#BB3F3F]'>
