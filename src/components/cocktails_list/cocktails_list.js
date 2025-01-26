@@ -45,6 +45,10 @@ const CocktailsList = ({ results }) => {
                                 </div>
                             ))}
                         </div>
+
+                        <div class="signatur text-center">
+                            Developed by Viktoria Björklund
+                        </div>
                     </>
                 ) : results === 'None Found' ? (
                     <p className='text-2xl'>No results found</p>
